@@ -1,0 +1,17 @@
+.chat-messages-container {
+  flex-grow: 1;
+  margin-top: 20px;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.welcome-message {
+  text-align: center;
+  color: rgb(120, 120, 120);
+}
+
+.loading-spinner {
+  height: 40px;
+  margin: -15px;
+}
