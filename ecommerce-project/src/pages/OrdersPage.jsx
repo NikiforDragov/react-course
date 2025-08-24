@@ -85,13 +85,13 @@ export function OrdersPage({ cart }) {
                                                         }
                                                     </div>
                                                     <div className='product-delivery-date'>
-                                                        Arriving on:{' '}
+                                                        Arriving on:
                                                         {dayjs(
                                                             orderProduct.estimatedDeliveryTimeMs
                                                         ).format('MMMM D')}
                                                     </div>
                                                     <div className='product-quantity'>
-                                                        Quantity:{' '}
+                                                        Quantity:
                                                         {orderProduct.quantity}
                                                     </div>
                                                     <button className='buy-again-button button-primary'>
