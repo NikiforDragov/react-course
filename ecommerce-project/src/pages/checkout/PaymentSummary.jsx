@@ -39,7 +39,7 @@ export function PaymentSummary({ paymentSummary, loadCart }) {
 
                     <div
                         className='payment-summary-row subtotal-row'
-                        data-testid="payment-summary-total-before-tax"
+                        data-testid='payment-summary-total-before-tax'
                     >
                         <div>Total before tax:</div>
                         <div className='payment-summary-money'>
@@ -51,7 +51,7 @@ export function PaymentSummary({ paymentSummary, loadCart }) {
 
                     <div
                         className='payment-summary-row'
-                        data-testid="payment-summary-tax"
+                        data-testid='payment-summary-tax'
                     >
                         <div>Estimated tax (10%):</div>
                         <div className='payment-summary-money'>
@@ -61,7 +61,7 @@ export function PaymentSummary({ paymentSummary, loadCart }) {
 
                     <div
                         className='payment-summary-row total-row'
-                        data-testid="payment-summary-total"
+                        data-testid='payment-summary-total'
                     >
                         <div>Order total:</div>
                         <div className='payment-summary-money'>
@@ -72,6 +72,7 @@ export function PaymentSummary({ paymentSummary, loadCart }) {
                     <button
                         className='place-order-button button-primary'
                         onClick={createOrder}
+                        data-testid='place-order-button'
                     >
                         Place your order
                     </button>
