@@ -17,6 +17,7 @@ import { defaultProducts } from './defaultData/defaultProducts.js';
 import { defaultDeliveryOptions } from './defaultData/defaultDeliveryOptions.js';
 import { defaultCart } from './defaultData/defaultCart.js';
 import { defaultOrders } from './defaultData/defaultOrders.js';
+import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +39,19 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/reset', resetRoutes);
 app.use('/api/payment-summary', paymentSummaryRoutes);
 
+// Serve static files from the dist folder
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Catch-all route to serve index.html for any unmatched routes
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'dist', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('index.html not found');
+  }
+});
+
 // Error handling middleware
 /* eslint-disable no-unused-vars */
 app.use((err, req, res, next) => {
@@ -48,12 +62,41 @@ app.use((err, req, res, next) => {
 
 // Sync database and load default data if none exist
 await sequelize.sync();
+
 const productCount = await Product.count();
 if (productCount === 0) {
-  await Product.bulkCreate(defaultProducts);
-  await DeliveryOption.bulkCreate(defaultDeliveryOptions);
-  await CartItem.bulkCreate(defaultCart);
-  await Order.bulkCreate(defaultOrders);
+  const timestamp = Date.now();
+
+  const productsWithTimestamps = defaultProducts.map((product, index) => ({
+    ...product,
+    createdAt: new Date(timestamp + index),
+    updatedAt: new Date(timestamp + index)
+  }));
+
+  const deliveryOptionsWithTimestamps = defaultDeliveryOptions.map((option, index) => ({
+    ...option,
+    createdAt: new Date(timestamp + index),
+    updatedAt: new Date(timestamp + index)
+  }));
+
+  const cartItemsWithTimestamps = defaultCart.map((item, index) => ({
+    ...item,
+    createdAt: new Date(timestamp + index),
+    updatedAt: new Date(timestamp + index)
+  }));
+
+  const ordersWithTimestamps = defaultOrders.map((order, index) => ({
+    ...order,
+    createdAt: new Date(timestamp + index),
+    updatedAt: new Date(timestamp + index)
+  }));
+
+  await Product.bulkCreate(productsWithTimestamps);
+  await DeliveryOption.bulkCreate(deliveryOptionsWithTimestamps);
+  await CartItem.bulkCreate(cartItemsWithTimestamps);
+  await Order.bulkCreate(ordersWithTimestamps);
+
+  console.log('Default data added to the database.');
 }
 
 // Start server
