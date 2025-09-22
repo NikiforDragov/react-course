@@ -4,7 +4,13 @@ import dayjs from 'dayjs';
 
 import './ChatMessage.css';
 
-export function ChatMessage({ message, sender, time }) {
+type ChatMessageProps = {
+    message: string;
+    sender: string;
+    time: number;
+};
+
+export function ChatMessage({ message, sender, time }: ChatMessageProps) {
     // const message = props.message;
     // const sender = props.sender;
     // const {message, sender} = props;
